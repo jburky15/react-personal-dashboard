@@ -31,17 +31,32 @@ function App() {
     setTasks(
       tasks.map((task) =>
         task.id === id
-        ? { ...task, completed: !task.completed}
-        : task
+          ? { ...task, completed: !task.completed }
+          : task
       )
     )
+  }
+
+  function addTask(taskData) {
+    const newTask = {
+      id: Date.now(),
+      title: taskData.title,
+      priority: taskData.priority,
+      completed: false,
+    }
+
+    setTasks([...tasks, newTask])
   }
 
   return (
     <main>
       <Header />
-      <Stats tasks={tasks}/>
-      <TaskList tasks={tasks} setTasks={toggleTask}/>
+      <Stats tasks={tasks} />
+      <TaskList
+        tasks={tasks}
+        toggleTask={toggleTask}
+        addTask={addTask}
+      />
       <Goals />
     </main>
   )

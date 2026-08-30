@@ -19,7 +19,7 @@ function Stats( { tasks }) {
                 </div>
 
                 <div>
-                    <h3>Goals</h3>
+                    <h3>Incomplete</h3>
                     <p>{openTasks}</p>
                 </div>
             </div>
