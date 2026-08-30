@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Header from './components/Header'
 import Stats from './components/Stats'
@@ -6,26 +6,15 @@ import TaskList from './components/TaskList'
 import Goals from './components/Goals'
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: 'Finish React warm-up project',
-      priority: 'high',
-      completed: false,
-    },
-    {
-      id: 2,
-      title: 'Go grocery shopping',
-      priority: 'medium',
-      completed: false,
-    },
-    {
-      id: 3,
-      title: 'Read for 30 minutes',
-      priority: 'low',
-      completed: true,
-    },
-  ])
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('tasks')
+
+    return savedTasks ? JSON.parse(savedTasks) : []
+  })
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }, [tasks])
 
   function toggleTask(id) {
     setTasks(
@@ -33,8 +22,7 @@ function App() {
         task.id === id
           ? { ...task, completed: !task.completed }
           : task
-      )
-    )
+      ))
   }
 
   function addTask(taskData) {
@@ -48,6 +36,10 @@ function App() {
     setTasks([...tasks, newTask])
   }
 
+  function deleteTask(id) {
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
   return (
     <main>
       <Header />
@@ -56,6 +48,7 @@ function App() {
         tasks={tasks}
         toggleTask={toggleTask}
         addTask={addTask}
+        deleteTask={deleteTask}
       />
       <Goals />
     </main>

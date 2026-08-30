@@ -1,4 +1,4 @@
-function TaskItem({ task, toggleTask }) {
+function TaskItem({ task, toggleTask, deleteTask }) {
     return(
         <li className={task.completed ? 'completed' : ''}>
             <label>
@@ -12,6 +12,10 @@ function TaskItem({ task, toggleTask }) {
             </label>
 
             <span>{task.priority}</span>
+
+            <button onClick={() => deleteTask(task.id)}>
+                Delete
+            </button>
         </li>
     )
 }
