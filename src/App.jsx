@@ -40,6 +40,44 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  const [goals, setGoals] = useState(() => {
+  const savedGoals = localStorage.getItem('goals')
+
+  return savedGoals ? JSON.parse(savedGoals) : []
+  })
+
+  useEffect(() => {
+      localStorage.setItem('goals', JSON.stringify(goals))
+  }, [goals])
+
+  function addGoal(goalData) {
+    const newGoal = {
+      id: Date.now(),
+      title: goalData.title,
+      target: goalData.target,
+      progress: 0,
+    }
+
+    setGoals([...goals, newGoal])
+  }
+
+  function updateGoal(id) {
+    setGoals(
+      goals.map((goal) => 
+        goal.id === id
+      ? {
+          ...goal, 
+          progress: Math.min(goal.progress + 1, goal.target),
+        }
+      : goal
+      )
+    )
+  }
+
+  function deleteGoal(id) {
+    setGoals(goals.filter((goal) => goal.id !== id))
+  }
+
   return (
     <main className='min-h-screen bg-amber-50'>
       <div className='mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8'>
@@ -51,7 +89,12 @@ function App() {
           addTask={addTask}
           deleteTask={deleteTask}
         />
-        <Goals />
+        <Goals 
+          goals={goals}
+          addGoal={addGoal}
+          updateGoal={updateGoal}
+          deleteGoal={deleteGoal}
+        />
       </div>
     </main>
   )
