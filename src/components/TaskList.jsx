@@ -34,37 +34,66 @@ function TaskList({ tasks, toggleTask, addTask, deleteTask }) {
     }
 
   return (
-    <section>
-      <h2>Tasks</h2>
+    <section className='rounded-xl border border-slate-200 bg-white p-6 shadow-sm'>
+      <div className='mb-6'>
+        <h2 className='text-lg font-semibold text-slate-900'>
+          Tasks
+        </h2>
 
-        <div>
-            <button onClick={() => setFilter('all')}>
-                All
-            </button>
+        <p className='mt-1 text-sm text-slate-500'>
+          Manage your current tasks and goals
+        </p>
 
-            <button onClick={() => setFilter('open')}>
-                Open
-            </button>
+          <div className='mb-6 flex flex-wrap gap-2'>
+              <button onClick={() => setFilter('all')}
+                    className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+                      filter === 'all'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    All
+                  </button>
 
-            <button onClick={() => setFilter('completed')}>
-                Completed
-            </button>
-        </div>
+                  <button
+                    onClick={() => setFilter('open')}
+                    className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+                      filter === 'open'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    Open
+                  </button>
 
-        <select 
-            value={sort} 
-            onChange={(e) => setSort(e.target.value)}
-        >
-            <option value="none">Sort by</option>
-            <option value="priority">Priority</option>
-        </select>
+                  <button
+                    onClick={() => setFilter('completed')}
+                    className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+                      filter === 'completed'
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                  Completed
+              </button>
+          </div>
+
+          <select 
+              value={sort} 
+              onChange={(e) => setSort(e.target.value)}
+              className="ml-auto rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600"
+          >
+              <option value="none">Sort by</option>
+              <option value="priority">Priority</option>
+          </select>
+      </div>
 
       <TaskForm addTask={addTask} />
 
       {filteredTasks.length === 0 ? (
-        <p>No tasks yet.</p>
+        <p className='rounded-lg bg-slate-50 px-4 py-8 text-center text-sm text-slate-500'>No tasks yet.</p>
       ) : (
-        <ul>
+        <ul className='space-y-3'>
           {sortedTasks.map((task) => (
             <TaskItem
               key={task.id}
@@ -75,8 +104,6 @@ function TaskList({ tasks, toggleTask, addTask, deleteTask }) {
           ))}
         </ul>
       )}
-
-      <button>Add Task</button>
     </section>
   )
 }
