@@ -1,13 +1,27 @@
-function TaskList() {
-    return (
-        <section>
-            <h2>Tasks</h2>
+import TaskItem from './TaskItem'
 
-            <p>No tasts yet.</p>
+function TaskList({ tasks, toggleTask }) {
+  return (
+    <section>
+      <h2>Tasks</h2>
 
-            <button>Add Task</button>
-        </section>
-    )
+      {tasks.length === 0 ? (
+        <p>No tasks yet.</p>
+      ) : (
+        <ul>
+          {tasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              toggleTask={toggleTask}
+            />
+          ))}
+        </ul>
+      )}
+
+      <button>Add Task</button>
+    </section>
+  )
 }
 
 export default TaskList

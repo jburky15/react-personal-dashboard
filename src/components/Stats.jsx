@@ -1,4 +1,8 @@
-function Stats() {
+function Stats( { tasks }) {
+    const totalTasks = tasks.length
+    const completedTasks = tasks.filter((task) => task.completed).length
+    const openTasks = totalTasks - completedTasks
+
     return(
         <section>
             <h2>Overview</h2>
@@ -6,17 +10,17 @@ function Stats() {
             <div>
                 <div>
                     <h3>Tasks</h3>
-                    <p>0</p>
+                    <p>{totalTasks}</p>
                 </div>
 
                 <div>
                     <h3>Completed</h3>
-                    <p>0</p>
+                    <p>{completedTasks}</p>
                 </div>
 
                 <div>
                     <h3>Goals</h3>
-                    <p>0</p>
+                    <p>{openTasks}</p>
                 </div>
             </div>
         </section>

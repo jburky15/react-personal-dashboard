@@ -20,3 +20,8 @@ main {
 section {
   margin-top: 2rem;
 }
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
